@@ -1,0 +1,24 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/.idea/.idea.Wolf.Blog
+/.vs/Wolf.Blog/v15
+/ArticelApplication/obj
+/ArticelDomain/obj
+/ArticelRepository/obj/Debug/netstandard2.0
+/BlogApplication/bin/Debug/netstandard2.0
+/BlogApplication/obj
+/BlogDomain/bin/Debug/netstandard2.0
+/BlogDomain/obj
+/BlogRepository/bin/Debug/netcoreapp2.1
+/BlogRepository/obj
+/IArticelApplication/obj
+/IBlogApplication/obj
+/BlogSystem/obj
+/IArticelApplication/bin/Debug/netstandard2.0
+/ArticelDomain/bin/Debug/netstandard2.0
+/ArticelApplication/bin/Debug/netstandard2.0
+/ArticelRepository/obj
+/.vs/config
+/ArticelRepository/bin/Debug/netstandard2.0
