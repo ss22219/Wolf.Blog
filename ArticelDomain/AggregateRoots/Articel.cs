@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Zaaby.DDD.Abstractions.Domain;
 
@@ -36,11 +37,17 @@ namespace ArticelDomain.AggregateRoots
         /// </summary>
         public IList<string> Tags { get; private set; }
 
-        public Article(string id, string title, string content, ArticleState state, string categoryId = null, IList<string> tags = null)
+        /// <summary>
+        /// 创建日期
+        /// </summary>
+        public DateTime CreateDate { get; set; }
+
+        public Article(string id, string title, string content, DateTime createDate, ArticleState state, string categoryId = null, IList<string> tags = null)
         {
             Assert.IsNotNullOrWhiteSpace("文章id", id);
             Assert.IsNotNullOrWhiteSpace("文章标题", title);
             Assert.IsNotNullOrWhiteSpace("文章内容", content);
+            Assert.IsNotNull("文章创建日期", createDate);
 
             this.Id = id;
             this.Title = title;
@@ -48,6 +55,7 @@ namespace ArticelDomain.AggregateRoots
             this.CategoryId = categoryId;
             this.Tags = tags ?? new List<string>();
             this.State = state;
+            this.CreateDate = createDate;
         }
 
         public enum ArticleState

@@ -5,7 +5,7 @@ namespace ArticelRepository
 {
     public class ArticelRepository : IArticelRepository
     {
-        public string FindByTitle(string title)
+        public string FindIdByTitle(string title)
         {
             throw new NotImplementedException();
         }

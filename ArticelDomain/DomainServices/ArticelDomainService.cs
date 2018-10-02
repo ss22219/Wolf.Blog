@@ -21,7 +21,7 @@ namespace ArticelDomain.DomainServices
 
         public void CreateArticel(Article articel)
         {
-            var id = _articelRepository.FindByTitle(articel.Title);
+            var id = _articelRepository.FindIdByTitle(articel.Title);
             if (!string.IsNullOrEmpty(id))
                 throw new ArticelDomainEntityExistsException($"文章 {articel.Title} 已经存在");
             _articelRepository.Add(articel);

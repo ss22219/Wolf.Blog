@@ -1,8 +1,4 @@
-﻿using ArticelDomain.DomainEvents;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Zaaby.DDD.Abstractions.Domain;
+﻿using Zaaby.DDD.Abstractions.Domain;
 
 namespace ArticelDomain.AggregateRoots
 {

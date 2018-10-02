@@ -22,3 +22,5 @@
 /ArticelRepository/obj
 /.vs/config
 /ArticelRepository/bin/Debug/netstandard2.0
+/Configuration.Abstractions/bin/Debug/netstandard2.0
+/Configuration.Abstractions/obj
