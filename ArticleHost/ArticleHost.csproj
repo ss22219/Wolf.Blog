@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Zaabee.RabbitMQ" Version="1.3.0" />
+    <PackageReference Include="Zaabee.RabbitMQ.Jil" Version="1.0.3" />
+    <PackageReference Include="Zaaby.DDD" Version="0.1.3" />
+    <PackageReference Include="Zaaby.DDD.EventBus.RabbitMQ" Version="0.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Zaaby\Zaaby\Zaaby.csproj" />
+    <ProjectReference Include="..\ArticleApplication\ArticleApplication.csproj" />
+    <ProjectReference Include="..\ArticleDomain\ArticleDomain.csproj" />
+    <ProjectReference Include="..\Infrastracture.Configuration.Abstractions\Infrastracture.Configuration.Abstractions.csproj" />
+    <ProjectReference Include="..\MemoryRepository\MemoryRepository.csproj" />
+    <ProjectReference Include="..\QueryService\QueryService.csproj" />
+    <ProjectReference Include="..\Wolf.Configuration\Wolf.Configuration.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Application.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RabbitMQ.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

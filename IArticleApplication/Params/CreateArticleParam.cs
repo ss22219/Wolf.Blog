@@ -5,32 +5,32 @@ namespace IArticleApplication.Params
 {
     public class CreateArticleParam
     {
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// 标题
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// 内容
         /// </summary>
-        public string Content { get; private set; }
+        public string Content { get; set; }
 
         /// <summary>
         /// 文章分类ID
         /// </summary>
-        public string CategoryId { get; private set; }
+        public string CategoryId { get; set; }
 
         /// <summary>
         /// 文章状态
         /// </summary>
-        public CreateArticleState State { get; private set; }
+        public CreateArticleState State { get; set; }
 
         /// <summary>
         /// 文章标签
         /// </summary>
-        public IList<string> Tags { get; private set; }
+        public IList<string> Tags { get; set; }
     }
 
     /// <summary>

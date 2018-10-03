@@ -31,6 +31,8 @@ namespace ArticleDomain.DomainServices.EventHandlers
                     if (_articleCategoryRepository.Update(category, version))
                         break;
                 }
+                else
+                    break;
             }
         }
     }

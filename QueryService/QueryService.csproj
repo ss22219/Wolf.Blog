@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ArticleApplication\ArticleApplication.csproj" />
+    <ProjectReference Include="..\Infrastracture.Configuration.Abstractions\Infrastracture.Configuration.Abstractions.csproj" />
+    <ProjectReference Include="..\MemoryRepository\MemoryRepository.csproj" />
+  </ItemGroup>
+
+</Project>

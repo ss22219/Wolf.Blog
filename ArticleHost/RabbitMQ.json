@@ -1,0 +1,10 @@
+{
+  "ZaabeeRabbitMQ":{
+    "AutomaticRecoveryEnabled":"false",
+    "HeartBeat":60,
+    "NetworkRecoveryInterval":"00:00:00.0000060",
+    "Hosts": [ "rabbitmq.wolfapp.cn" ],
+    "UserName":"guest",
+    "Password":"guest"
+  }
+} 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Zaaby.DDD.Abstractions.Application;
 
@@ -9,34 +10,43 @@ namespace IArticleApplication.IntegrationEvents
     /// </summary>
     public class NewArticleCreatedEvent : IIntegrationEvent
     {
-        public string Id { get; private set; }
+        public string Id { get;  set; }
 
         /// <summary>
         /// 标题
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get;  set; }
 
         /// <summary>
         /// 内容
         /// </summary>
-        public string Content { get; private set; }
+        public string Content { get;  set; }
 
         /// <summary>
         /// 文章分类ID
         /// </summary>
-        public string CategoryId { get; private set; }
+        public string CategoryId { get;  set; }
 
         /// <summary>
         /// 文章状态
         /// </summary>
-        public NewArticleCreatedState State { get; private set; }
+        public NewArticleCreatedState State { get;  set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateDate { get;  set; }
 
         /// <summary>
         /// 文章标签
         /// </summary>
-        public IList<string> Tags { get; private set; }
+        public IList<string> Tags { get;  set; }
 
-        public NewArticleCreatedEvent(string id, string title, string content, System.DateTime createDate, NewArticleCreatedState state, string categoryId, IList<string> tags = null)
+        public NewArticleCreatedEvent()
+        {
+        }
+
+        public NewArticleCreatedEvent(string id, string title, string content, DateTime createDate, NewArticleCreatedState state, string categoryId, IList<string> tags = null)
         {
             this.Id = id;
             this.Title = title;
@@ -44,6 +54,7 @@ namespace IArticleApplication.IntegrationEvents
             this.CategoryId = categoryId;
             this.Tags = tags;
             this.State = state;
+            this.CreateDate = createDate;
         }
     }
 

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Configuration.Abstractions
+namespace Infrastracture.Configuration.Abstractions
 {
-    public interface IConfiguration
+    public interface IConfig
     {
         string this[string key] { get; }
         T Get<T>(string key);
