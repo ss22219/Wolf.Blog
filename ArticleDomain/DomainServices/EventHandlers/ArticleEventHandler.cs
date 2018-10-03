@@ -22,6 +22,7 @@ namespace ArticleDomain.DomainServices.EventHandlers
             ///版本不正确，采用重试策略
             while (true)
             {
+                //直接从仓储还原一个聚合，无法保证唯一性
                 var category = _articleCategoryRepository.Restore(domainEvent.CategoryId, out int version);
                 if (category != null)
                 {

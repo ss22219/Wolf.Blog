@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ArticleDomain\ArticleDomain.csproj" />
-    <ProjectReference Include="..\ArticleRepository\MemoryRepository.csproj" />
+    <ProjectReference Include="..\MemoryRepository\MemoryRepository.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,7 @@
 using ArticleDomain.AggregateRoots;
-using ArticleDomain.DomainServices;
 using MemoryRepository;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xunit;
-using Zaaby.DDD;
 
 namespace UnitTest
 {
@@ -45,7 +42,6 @@ namespace UnitTest
             article.Publish();
 
             Assert.True(repos.Update(article, version));
-
             Assert.False(repos.Update(article, version));
         }
 
