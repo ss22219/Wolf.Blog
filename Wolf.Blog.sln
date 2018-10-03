@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zaaby.DDD", "..\Zaaby.DDD\Zaaby.DDD\Zaaby.DDD.csproj", "{319AA743-FD24-490E-9BA3-F923F0A13AB2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zaaby.DDD.Abstractions", "..\Zaaby.DDD\Zaaby.DDD.Abstractions\Zaaby.DDD.Abstractions.csproj", "{2FE6A5D3-82E3-406F-AD0E-F26C39D65AC4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zaaby.DDD.EventBus.RabbitMQ", "..\Zaaby.DDD\Zaaby.DDD.EventBus.RabbitMQ\Zaaby.DDD.EventBus.RabbitMQ.csproj", "{41FEC1C5-30ED-49AA-AD70-66F649A8947D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastracture", "Infrastracture", "{60FD1904-594A-4FFC-96B4-D9BD583E6774}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ArticleSystem", "ArticleSystem", "{75CD9000-843E-4BE7-9907-1AA389210E21}"
@@ -21,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleApplication", "Artic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleDomain", "ArticleDomain\ArticleDomain.csproj", "{E39EEB98-6A7F-4C70-A327-956094E61FD3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleRepository", "ArticleRepository\ArticleRepository.csproj", "{3DF0763A-C1EA-4432-8508-E5DF6C0F9456}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemoryRepository", "ArticleRepository\MemoryRepository.csproj", "{3DF0763A-C1EA-4432-8508-E5DF6C0F9456}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{175981F0-20B1-48DD-8DD8-DE1C213DC00F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,18 +25,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{319AA743-FD24-490E-9BA3-F923F0A13AB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{319AA743-FD24-490E-9BA3-F923F0A13AB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{319AA743-FD24-490E-9BA3-F923F0A13AB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{319AA743-FD24-490E-9BA3-F923F0A13AB2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2FE6A5D3-82E3-406F-AD0E-F26C39D65AC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2FE6A5D3-82E3-406F-AD0E-F26C39D65AC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2FE6A5D3-82E3-406F-AD0E-F26C39D65AC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FE6A5D3-82E3-406F-AD0E-F26C39D65AC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{41FEC1C5-30ED-49AA-AD70-66F649A8947D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41FEC1C5-30ED-49AA-AD70-66F649A8947D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41FEC1C5-30ED-49AA-AD70-66F649A8947D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41FEC1C5-30ED-49AA-AD70-66F649A8947D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5911C851-8C11-4628-8236-F9718CC16960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5911C851-8C11-4628-8236-F9718CC16960}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5911C851-8C11-4628-8236-F9718CC16960}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,14 +45,15 @@ Global
 		{3DF0763A-C1EA-4432-8508-E5DF6C0F9456}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DF0763A-C1EA-4432-8508-E5DF6C0F9456}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DF0763A-C1EA-4432-8508-E5DF6C0F9456}.Release|Any CPU.Build.0 = Release|Any CPU
+		{175981F0-20B1-48DD-8DD8-DE1C213DC00F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{175981F0-20B1-48DD-8DD8-DE1C213DC00F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{175981F0-20B1-48DD-8DD8-DE1C213DC00F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{175981F0-20B1-48DD-8DD8-DE1C213DC00F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{319AA743-FD24-490E-9BA3-F923F0A13AB2} = {60FD1904-594A-4FFC-96B4-D9BD583E6774}
-		{2FE6A5D3-82E3-406F-AD0E-F26C39D65AC4} = {60FD1904-594A-4FFC-96B4-D9BD583E6774}
-		{41FEC1C5-30ED-49AA-AD70-66F649A8947D} = {60FD1904-594A-4FFC-96B4-D9BD583E6774}
 		{5911C851-8C11-4628-8236-F9718CC16960} = {60FD1904-594A-4FFC-96B4-D9BD583E6774}
 		{B59DD8F5-041C-4290-B54C-1712F63F7275} = {75CD9000-843E-4BE7-9907-1AA389210E21}
 		{82C3EB82-5284-4D80-B9FA-6FFE4BD560DE} = {75CD9000-843E-4BE7-9907-1AA389210E21}

@@ -3,7 +3,7 @@ using ArticleDomain.IRepositories;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ArticleRepository
+namespace MemoryRepository
 {
     public class ArticleCategoryRepository : IArticleCategoryRepository
     {

@@ -58,6 +58,11 @@ namespace ArticleDomain.AggregateRoots
             this.CreateDate = createDate;
         }
 
+        public void Publish()
+        {
+            State = ArticleState.Published;
+        }
+
         public enum ArticleState
         {
             [Description("草稿")]

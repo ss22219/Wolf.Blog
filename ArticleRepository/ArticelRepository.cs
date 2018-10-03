@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ArticleRepository
+namespace MemoryRepository
 {
     public class ArticleRepository : IArticleRepository
     {
