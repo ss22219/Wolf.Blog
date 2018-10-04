@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <Content Update="ApplicationService.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
