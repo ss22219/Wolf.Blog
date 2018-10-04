@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Zaaby.DDD\Zaaby.DDD.Abstractions\Zaaby.DDD.Abstractions.csproj" />
     <ProjectReference Include="..\ArticleDomain\ArticleDomain.csproj" />
     <ProjectReference Include="..\MemoryRepository\MemoryRepository.csproj" />
   </ItemGroup>
