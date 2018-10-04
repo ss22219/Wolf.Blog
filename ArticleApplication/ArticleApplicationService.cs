@@ -6,6 +6,7 @@ using IArticleApplication.IntegrationEvents;
 using IArticleApplication.Model;
 using IArticleApplication.Params;
 using System;
+using Infrastracture.Utilities;
 using Zaaby.DDD.Abstractions.Infrastructure.EventBus;
 using static ArticleDomain.AggregateRoots.Article;
 
@@ -16,24 +17,25 @@ namespace ArticleApplication
     /// </summary>
     public class ArticleApplicationService : IArticleApplicationService
     {
-        private ArticleDomainService _articleDomainService;
-        private IArticleRepository _articleRepository;
-        private IArticleQueryService _articleQueryService;
-        private IIntegrationEventBus _integrationEventBus;
+        private readonly ArticleDomainService _articleDomainService;
+        private readonly IArticleQueryService _articleQueryService;
+        private readonly IIntegrationEventBus _integrationEventBus;
 
-        public ArticleApplicationService(ArticleDomainService articleDomainService, IArticleRepository articleRepository, IArticleQueryService articleQueryService, IIntegrationEventBus integrationEventBus)
+        public ArticleApplicationService(ArticleDomainService articleDomainService, IArticleQueryService articleQueryService,
+            IIntegrationEventBus integrationEventBus)
         {
-            this._articleDomainService = articleDomainService;
-            this._articleRepository = articleRepository;
-            this._articleQueryService = articleQueryService;
-            this._integrationEventBus = integrationEventBus;
+            _articleDomainService = articleDomainService;
+            _articleQueryService = articleQueryService;
+            _integrationEventBus = integrationEventBus;
         }
 
         public void CreateArticle(CreateArticleParam param)
         {
-            var article = new Article(param.Id, param.Title, param.Content, DateTime.Now, (ArticleState)param.State, param.CategoryId, param.Tags);
+            var article = new Article(GuidHelper.GenerateComb().ToString(), param.Title, param.Content, DateTime.Now, (ArticleState) param.State,
+                param.CategoryId, param.Tags);
             _articleDomainService.CreateArticle(article);
-            _integrationEventBus.PublishEvent(new NewArticleCreatedEvent(article.Id, article.Title, article.Content, article.CreateDate, (NewArticleCreatedState)article.State, article.CategoryId, article.Tags));
+            _integrationEventBus.PublishEvent(new NewArticleCreatedEvent(article.Id, article.Title, article.Content,
+                article.CreateDate, (ArticleDetailState) article.State, article.CategoryId, article.Tags));
         }
 
         public ArticleDetail FindArticleById(string id)
@@ -44,6 +46,34 @@ namespace ArticleApplication
         public ArticlePageInfo QueryArticleByPage(QueryArticleParam param)
         {
             return _articleQueryService.QueryArticleByPage(param);
+        }
+
+        public void Publish(string id)
+        {
+            var article = _articleDomainService.PublishArticle(id);
+            _integrationEventBus.PublishEvent(new ArticleUpdatedEvent()
+            {
+                OldValues = _articleQueryService.GetArticleDetail(id),
+                NewValues = new ArticleDetail()
+                {
+                    Id = article.Id, Title = article.Title, Content = article.Content, CreateDate = article.CreateDate,
+                    State = (ArticleDetailState) article.State, CategoryId = article.CategoryId, Tags = article.Tags
+                }
+            });
+        }
+
+        public void Delete(string id)
+        {
+            var article = _articleDomainService.DeleteArticle(id);
+            _integrationEventBus.PublishEvent(new ArticleUpdatedEvent()
+            {
+                OldValues = _articleQueryService.GetArticleDetail(id),
+                NewValues = new ArticleDetail()
+                {
+                    Id = article.Id, Title = article.Title, Content = article.Content, CreateDate = article.CreateDate,
+                    State = (ArticleDetailState) article.State, CategoryId = article.CategoryId, Tags = article.Tags
+                }
+            });
         }
     }
 }

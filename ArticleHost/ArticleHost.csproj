@@ -17,9 +17,9 @@
     <ProjectReference Include="..\ArticleApplication\ArticleApplication.csproj" />
     <ProjectReference Include="..\ArticleDomain\ArticleDomain.csproj" />
     <ProjectReference Include="..\Infrastracture.Configuration.Abstractions\Infrastracture.Configuration.Abstractions.csproj" />
+    <ProjectReference Include="..\Infrastracture.Configuration\Infrastracture.Configuration.csproj" />
     <ProjectReference Include="..\MemoryRepository\MemoryRepository.csproj" />
     <ProjectReference Include="..\QueryService\QueryService.csproj" />
-    <ProjectReference Include="..\Wolf.Configuration\Wolf.Configuration.csproj" />
   </ItemGroup>
 
   <ItemGroup>

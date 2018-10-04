@@ -24,7 +24,6 @@ namespace BlogWeb.Controllers
                 _articleApplicationService.CreateArticle(new IArticleApplication.Params.CreateArticleParam()
                 {
                     Content = "test",
-                    Id = Guid.NewGuid().ToString(),
                     State = IArticleApplication.Params.CreateArticleState.Draft,
                     Title = "test"
                 });

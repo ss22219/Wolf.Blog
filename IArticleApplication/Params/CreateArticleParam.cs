@@ -5,8 +5,6 @@ namespace IArticleApplication.Params
 {
     public class CreateArticleParam
     {
-        public string Id { get; set; }
-
         /// <summary>
         /// 标题
         /// </summary>

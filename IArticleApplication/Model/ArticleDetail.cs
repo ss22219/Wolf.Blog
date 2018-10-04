@@ -44,8 +44,8 @@ namespace IArticleApplication.Model
         [Description("草稿")]
         Draft = 0,
         [Description("已发布")]
-        Published = 0,
+        Published = 1,
         [Description("已删除")]
-        Deleted = 0
+        Deleted = 2
     }
 }

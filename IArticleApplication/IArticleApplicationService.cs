@@ -14,5 +14,7 @@ namespace IArticleApplication
         ArticleDetail FindArticleById(string id);
 
         ArticlePageInfo QueryArticleByPage(QueryArticleParam param);
+        void Publish(string id);
+        void Delete(string id);
     }
 }

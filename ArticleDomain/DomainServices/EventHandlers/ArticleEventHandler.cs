@@ -7,7 +7,7 @@ namespace ArticleDomain.DomainServices.EventHandlers
 {
     public class ArticleEventHandler : IDomainEventHandler<NewArticleCreateDomainEvent>
     {
-        IArticleCategoryRepository _articleCategoryRepository;
+        private readonly IArticleCategoryRepository _articleCategoryRepository;
         public ArticleEventHandler(IArticleCategoryRepository articleCategoryRepository)
         {
             _articleCategoryRepository = articleCategoryRepository;

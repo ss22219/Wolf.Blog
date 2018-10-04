@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using QueryService;
 using System;
 using System.IO;
-using Wolf.Configuration;
+using Infrastracture.Configuration;
 using Zaabee.RabbitMQ;
 using Zaabee.RabbitMQ.Abstractions;
 using Zaabee.RabbitMQ.Jil;

@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ArticleDomain\ArticleDomain.csproj" />
     <ProjectReference Include="..\IArticleApplication\IArticleApplication.csproj" />
+    <ProjectReference Include="..\Infrastracture.Utilities\Infrastracture.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

@@ -11,8 +11,10 @@ namespace ArticleDomain.DomainServices
     /// </summary>
     public class ArticleDomainService : IDomainService
     {
-        IArticleRepository _articleRepository;
-        IDomainEventPublisher _domainEventPublisher;
+        private const string CreateLock = "CreateArticleLock";
+        readonly IArticleRepository _articleRepository;
+        readonly IDomainEventPublisher _domainEventPublisher;
+
         public ArticleDomainService(IArticleRepository articleRepository, IDomainEventPublisher domainEventPublisher)
         {
             _articleRepository = articleRepository;
@@ -21,12 +23,47 @@ namespace ArticleDomain.DomainServices
 
         public void CreateArticle(Article article)
         {
-            var id = _articleRepository.FindIdByTitle(article.Title);
-            if (!string.IsNullOrEmpty(id))
-                throw new ArticleDomainEntityExistsException($"文章 {article.Title} 已经存在");
-            _articleRepository.Add(article);
+            lock (CreateLock)
+            {
+                var id = _articleRepository.FindIdByTitle(article.Title);
+                if (!string.IsNullOrEmpty(id))
+                    throw new ArticleDomainEntityExistsException($"文章 {article.Title} 已经存在");
+                _articleRepository.Add(article);
+            }
 
             _domainEventPublisher.PublishEvent(new NewArticleCreateDomainEvent(article));
+        }
+
+        public Article PublishArticle(string id)
+        {
+            while (true)
+            {
+                var article = _articleRepository.Restore(id, out int version);
+                if (article != null)
+                {
+                    article.Publish();
+                    if (_articleRepository.Update(article, version))
+                        return article;
+                }
+                else
+                    throw new ArticleDomainException("文章不存在");
+            }
+        }
+        
+        public Article DeleteArticle(string id)
+        {
+            while (true)
+            {
+                var article = _articleRepository.Restore(id, out int version);
+                if (article != null)
+                {
+                    article.Delete();
+                    if (_articleRepository.Update(article, version))
+                        return article;
+                }
+                else
+                    throw new ArticleDomainException("文章不存在");
+            }
         }
     }
 }
