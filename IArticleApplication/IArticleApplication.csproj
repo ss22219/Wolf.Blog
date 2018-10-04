@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Zaaby.DDD.Abstractions" Version="0.2.0" />
+    <ProjectReference Include="..\..\Zaaby.DDD\Zaaby.DDD.Abstractions\Zaaby.DDD.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

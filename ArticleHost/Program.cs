@@ -17,7 +17,7 @@ using Zaaby.DDD.Abstractions.Application;
 using Zaaby.DDD.Abstractions.Infrastructure.EventBus;
 using Zaaby.DDD.EventBus.RabbitMQ;
 
-namespace BlogHost
+namespace ArticleHost
 {
     class Program
     {
