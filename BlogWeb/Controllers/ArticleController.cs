@@ -20,13 +20,13 @@ namespace BlogWeb.Controllers
 
         public IActionResult Publish(string id)
         {
-            _articleApplicationService.Publish(id);
+            _articleApplicationService.PublishArticle(id);
             return Json(new {code = 0});
         }
         
-        public IActionResult Delete(string id)
+        public IActionResult Index(string id)
         {
-            _articleApplicationService.Delete(id);
+            _articleApplicationService.DeleteArticle(id);
             return Json(new {code = 0});
         }
 

@@ -23,7 +23,6 @@ namespace ArticleHost
     {
         static void Main(string[] args)
         {
-
             var configBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("RabbitMQ.json", true, true)
@@ -33,19 +32,22 @@ namespace ArticleHost
             var rabbitMqConfig = config.GetSection("ZaabeeRabbitMQ").Get<MqConfig>();
             var applicationConfig = config.GetSection("Application");
 
+            var categoryRepository = new ArticleCategoryRepository();
             Zaaby.ZaabyServer.GetInstance()
                 .UseDDD()
                 .UseZaabyServer<IApplicationService>()
                 .UseEventBus()
                 .AddSingleton<IConfig>(p =>
-                   new Config(applicationConfig))
+                    new Config(applicationConfig))
                 .AddSingleton<IZaabeeRabbitMqClient>(p =>
                     new ZaabeeRabbitMqClient(rabbitMqConfig, new Serializer()))
                 .AddScoped<IIntegrationEventBus, ZaabyEventBus>()
+                .AddScoped<ArticleCategoryDomainService>()
                 .AddSingleton<IArticleRepository, ArticleRepository>()
                 .AddSingleton<ArticleRepository>()
-                .AddSingleton<IArticleCategoryRepository, ArticleCategoryRepository>()
                 .AddSingleton<IArticleQueryService, ArticleQueryService>()
+                .AddSingleton<IArticleCategoryRepository>(e => categoryRepository)
+                .AddSingleton<ICategoryQueryService>(e => categoryRepository)
                 .UseUrls("http://*:5001")
                 .Run();
         }

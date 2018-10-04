@@ -14,7 +14,7 @@ namespace QueryService
     public class ArticleQueryService : IArticleQueryService
     {
         private readonly IIntegrationEventBus _integrationEventBus;
-        private readonly List<ArticleDetail> _articleDetails = new List<ArticleDetail>();
+        private readonly List<ArticleEventData> _articleDetails = new List<ArticleEventData>();
         private readonly IConfig _config;
         private readonly ArticleRepository _articleRepository;
 
@@ -27,22 +27,34 @@ namespace QueryService
             _config = config;
             _articleRepository = articleRepository;
 
-            _articleDetails = _articleRepository.GetAllEntity().Select(_articleRepositoryGetAllEntity =>
-                new ArticleDetail()
+            _articleDetails = _articleRepository.GetAllEntity().Select(entity =>
+                new ArticleEventData()
                 {
-                    Id = _articleRepositoryGetAllEntity.Id,
-                    Title = _articleRepositoryGetAllEntity.Title,
-                    Content = _articleRepositoryGetAllEntity.Content,
-                    CategoryId = _articleRepositoryGetAllEntity.CategoryId,
-                    State = (ArticleDetailState) _articleRepositoryGetAllEntity.State,
-                    Tags = _articleRepositoryGetAllEntity.Tags,
-                    CreateDate = _articleRepositoryGetAllEntity.CreateDate
+                    Id = entity.Id,
+                    Title = entity.Title,
+                    Content = entity.Content,
+                    CategoryId = entity.CategoryId,
+                    State = (ArticleDetailState) entity.State,
+                    Tags = entity.Tags,
+                    CreateDate = entity.CreateDate
                 }).ToList();
         }
 
         public ArticleDetail GetArticleDetail(string id)
         {
-            return _articleDetails.FirstOrDefault(a => a.Id == id);
+            var data = _articleDetails.FirstOrDefault(a => a.Id == id);
+            if (data == null)
+                return null;
+            return new ArticleDetail()
+            {
+                Id = data.Id,
+                Title = data.Title,
+                Content = data.Content,
+                CategoryId = data.CategoryId,
+                State = data.State,
+                Tags = data.Tags,
+                CreateDate = data.CreateDate
+            };
         }
 
         public ArticlePageInfo QueryArticleByPage(QueryArticleParam param)
@@ -53,7 +65,7 @@ namespace QueryService
             skip = Math.Max(0, skip);
             skip = (int) Math.Min(Math.Ceiling(_articleDetails.Count / (double) param.Page), skip);
 
-            var queryList = _articleDetails;
+            var queryList = _articleDetails.Where(a => a.State != ArticleDetailState.Deleted).ToList();
             queryList = queryList.Skip(skip).Take(pageSize + 1).ToList();
             if (queryList.Count > pageSize)
             {
@@ -61,13 +73,22 @@ namespace QueryService
                 pageInfo.NextPage = true;
             }
 
-            pageInfo.List = queryList;
+            pageInfo.List = queryList.Select(data => new ArticleDetail()
+            {
+                Id = data.Id,
+                Title = data.Title,
+                Content = data.Content,
+                CategoryId = data.CategoryId,
+                State = data.State,
+                Tags = data.Tags,
+                CreateDate = data.CreateDate
+            }).ToList();
             return pageInfo;
         }
 
         private void Hanlde(NewArticleCreatedEvent ev)
         {
-            _articleDetails.Add(new ArticleDetail()
+            _articleDetails.Add(new ArticleEventData()
             {
                 Id = ev.Data.Id,
                 CategoryId = ev.Data.CategoryId,
@@ -81,18 +102,22 @@ namespace QueryService
 
         private void Hanlde(ArticleUpdatedEvent ev)
         {
-            var detail = _articleDetails.FirstOrDefault(a => a.Id == ev.NewValues.Id);
+            var detail = _articleDetails.FirstOrDefault(a => a.Id == ev.Data.Id);
             if (detail == null)
-                _articleDetails.Add(ev.NewValues);
+                _articleDetails.Add(ev.Data);
             else
             {
-                detail.Content = ev.NewValues.Content;
-                detail.CategoryId = ev.NewValues.CategoryId;
-                detail.Content = ev.NewValues.Content;
-                detail.CreateDate = ev.NewValues.CreateDate;
-                detail.State = ev.NewValues.State;
-                detail.Tags = ev.NewValues.Tags;
-                detail.Title = ev.NewValues.Title;
+                if (detail.Version < ev.Data.Version)
+                {
+                    detail.Content = ev.Data.Content;
+                    detail.CategoryId = ev.Data.CategoryId;
+                    detail.Content = ev.Data.Content;
+                    detail.CreateDate = ev.Data.CreateDate;
+                    detail.State = ev.Data.State;
+                    detail.Tags = ev.Data.Tags;
+                    detail.Title = ev.Data.Title;
+                    detail.Version = ev.Data.Version;
+                }
             }
         }
     }

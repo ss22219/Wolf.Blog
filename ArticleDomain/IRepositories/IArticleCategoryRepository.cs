@@ -17,5 +17,6 @@ namespace ArticleDomain.IRepositories
         bool Update(ArticleCategory category, int version);
 
         ArticleCategory Restore(string id, out int version);
+        void Delete(string id);
     }
 }

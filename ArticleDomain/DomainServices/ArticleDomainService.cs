@@ -1,4 +1,5 @@
-﻿using ArticleDomain.AggregateRoots;
+﻿using System;
+using ArticleDomain.AggregateRoots;
 using ArticleDomain.DomainEvents;
 using ArticleDomain.IRepositories;
 using Zaaby.DDD.Abstractions.Domain;
@@ -34,11 +35,11 @@ namespace ArticleDomain.DomainServices
             _domainEventPublisher.PublishEvent(new NewArticleCreateDomainEvent(article));
         }
 
-        public Article PublishArticle(string id)
+        public Article PublishArticle(string id, out int version)
         {
             while (true)
             {
-                var article = _articleRepository.Restore(id, out int version);
+                var article = _articleRepository.Restore(id, out version);
                 if (article != null)
                 {
                     article.Publish();
@@ -49,12 +50,12 @@ namespace ArticleDomain.DomainServices
                     throw new ArticleDomainException("文章不存在");
             }
         }
-        
-        public Article DeleteArticle(string id)
+
+        public Article DeleteArticle(string id, out int version)
         {
             while (true)
             {
-                var article = _articleRepository.Restore(id, out int version);
+                var article = _articleRepository.Restore(id, out version);
                 if (article != null)
                 {
                     article.Delete();

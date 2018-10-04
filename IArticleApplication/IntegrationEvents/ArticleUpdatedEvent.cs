@@ -5,7 +5,6 @@ namespace IArticleApplication.IntegrationEvents
 {
     public class ArticleUpdatedEvent :IIntegrationEvent
     {
-        public ArticleDetail NewValues { get; set; }
-        public ArticleDetail OldValues { get; set; }
+        public ArticleEventData Data { get; set; }
     }
 }

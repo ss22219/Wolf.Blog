@@ -2,35 +2,49 @@
 using ArticleDomain.IRepositories;
 using System.Collections.Generic;
 using System.Linq;
+using ArticleApplication;
+using IArticleApplication.Model;
 
 namespace MemoryRepository
 {
-    public class ArticleCategoryRepository : IArticleCategoryRepository
+    public class ArticleCategoryRepository : IArticleCategoryRepository, ICategoryQueryService
     {
-        private List<ArticleCategoryEntity> articleEntities = new List<ArticleCategoryEntity>();
+        private readonly List<ArticleCategoryEntity> entities = new List<ArticleCategoryEntity>();
 
         public void Add(ArticleCategory articleCategory)
         {
-            articleEntities.Add(new ArticleCategoryEntity() { ArticleCategory = articleCategory });
+            entities.Add(new ArticleCategoryEntity() {ArticleCategory = articleCategory});
         }
 
         public string FindIdByName(string name)
         {
-            return articleEntities.FirstOrDefault(a => a.ArticleCategory.Name == name)?.ArticleCategory.Id;
+            return entities.FirstOrDefault(a => a.ArticleCategory.Name == name)?.ArticleCategory.Id;
         }
 
         public ArticleCategory Restore(string id, out int version)
         {
-            var entity = articleEntities.FirstOrDefault(e => e.ArticleCategory.Id == id);
+            var entity = entities.FirstOrDefault(e => e.ArticleCategory.Id == id);
             version = entity?.Version ?? 0;
             return entity?.ArticleCategory;
         }
 
+        public void Delete(string id)
+        {
+            var category = entities.FirstOrDefault(a => a.ArticleCategory.Id == id);
+            if (category != null)
+                entities.Remove(category);
+        }
+
         public bool Update(ArticleCategory articleCategory, int version)
         {
-            var entity = articleEntities.FirstOrDefault(e => e.ArticleCategory.Id == articleCategory.Id);
+            var entity = entities.FirstOrDefault(e => e.ArticleCategory.Id == articleCategory.Id);
             if (entity == null)
-                articleEntities.Add(new ArticleCategoryEntity() { ArticleCategory = articleCategory, Version = ++version });
+            {
+                entities.Add(
+                    new ArticleCategoryEntity() {ArticleCategory = articleCategory, Version = ++version});
+                return true;
+            }
+
             if (entity.Version != version)
                 return false;
 
@@ -43,6 +57,16 @@ namespace MemoryRepository
         {
             public ArticleCategory ArticleCategory { get; set; }
             public int Version { get; set; }
+        }
+
+        public IList<CategoryInfo> AllCategory()
+        {
+            return entities.Select(e => new CategoryInfo()
+            {
+                ArticalQuantity = e.ArticleCategory.ArticleQuantity,
+                Name = e.ArticleCategory.Name,
+                Id = e.ArticleCategory.Id
+            }).ToList();
         }
     }
 }

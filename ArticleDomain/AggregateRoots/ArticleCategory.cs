@@ -14,7 +14,7 @@ namespace ArticleDomain.AggregateRoots
         public ArticleCategory(string id, string name, int articleQuantity)
         {
             Assert.IsNotNullOrWhiteSpace("文章分类id", id);
-            Assert.IsNotNullOrWhiteSpace("文章分类名称", Name);
+            Assert.IsNotNullOrWhiteSpace("文章分类名称", name);
             this.Id = id;
             this.Name = name;
             this.ArticleQuantity = articleQuantity;
