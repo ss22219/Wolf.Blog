@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Infrastracture.Utilities\Infrastracture.Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Zaaby.DDD.Abstractions" Version="0.2.0" />
+  </ItemGroup>
+
 </Project>

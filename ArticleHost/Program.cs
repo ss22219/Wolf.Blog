@@ -1,12 +1,10 @@
 ﻿using ArticleApplication;
 using ArticleDomain.DomainServices;
 using ArticleDomain.IRepositories;
-using IArticleApplication;
 using Infrastracture.Configuration.Abstractions;
 using MemoryRepository;
 using Microsoft.Extensions.Configuration;
 using QueryService;
-using System;
 using System.IO;
 using Infrastracture.Configuration;
 using Zaabee.RabbitMQ;
