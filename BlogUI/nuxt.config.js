@@ -2,7 +2,9 @@ const pkg = require('./package')
 
 module.exports = {
   mode: 'spa',
-
+  router: {
+    mode: 'history'
+  },
   /*
    ** Headers of the page
    */
@@ -39,13 +41,28 @@ module.exports = {
    ** Global CSS
    */
   css: [
-    'github-markdown-css/github-markdown.css'
+    'github-markdown-css/github-markdown.css',
+    'normalize.css',
+    {
+      src: 'bulma',
+      lang: 'sass'
+    },
+    {
+      src: '~assets/css/main.scss',
+      lang: 'scss'
+    },
+    {
+      src: '~assets/css/tool.css',
+      lang: 'css'
+    }
   ],
 
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    '~/plugins/init'
+  ],
 
   /*
    ** Nuxt.js modules
@@ -59,6 +76,7 @@ module.exports = {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    baseURL: 'http://127.0.0.1:5002/'
   },
 
   /*

@@ -7,32 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using BlogWeb.Models;
 using IArticleApplication;
 using IArticleApplication.Params;
+using System.IO;
 
 namespace BlogWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IArticleApplicationService _articleApplicationService;
-
-        public HomeController(IArticleApplicationService articleApplicationService)
+        public IActionResult Index()
         {
-            _articleApplicationService = articleApplicationService;
-        }
-
-        public IActionResult Index(QueryArticleParam param)
-        {
-            var pageInfo = _articleApplicationService.QueryArticleByPage(param);
-            if (pageInfo.List.Count == 0)
-            {
-                Task.Run(() => _articleApplicationService.CreateArticle(
-                    new CreateArticleParam()
-                    {
-                        Content = "test",
-                        State = CreateArticleState.Draft,
-                        Title = "test"
-                    }));
-            }
-            return Json(pageInfo);
+            return PhysicalFile(Directory.GetCurrentDirectory() + "/wwwroot/index.html", "text/html");
         }
     }
 }

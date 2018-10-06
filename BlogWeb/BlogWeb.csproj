@@ -6,12 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Zaaby.Client">
-      <Version>0.5.0</Version>
+    <PackageReference Include="Microsoft.AspNetCore.Cors">
+      <Version>2.1.1</Version>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Zaaby\Zaaby.Client\Zaaby.Client.csproj" />
     <ProjectReference Include="..\IArticleApplication\IArticleApplication.csproj" />
   </ItemGroup>
 
@@ -20,5 +21,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
 </Project>

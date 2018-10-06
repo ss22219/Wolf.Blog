@@ -6,6 +6,7 @@
 import MarkdownIt from "markdown-it";
 import mermaid from "mermaid";
 import markdownItAnchor from "markdown-it-anchor";
+import markdownPlantuml from "markdown-it-plantuml"
 export default {
   name: "markdown",
   props: ["source"],
@@ -38,7 +39,7 @@ export default {
       permalink: true,
       // renderPermalink: (slug, opts, state, permalink) => {},
       permalinkClass: "header-anchor",
-      permalinkSymbol: "|",
+      permalinkSymbol: "#",
       permalinkBefore: true
     });
 
@@ -46,6 +47,8 @@ export default {
       theme: "neutral"
     });
 
+    md.use(markdownPlantuml)
+    //markdown-mermaid
     md.use(function(md) {
       md.mermaid = mermaid;
     });
@@ -55,7 +58,7 @@ export default {
     md.renderer.rules.fence = (tokens, idx, options, env, slf) => {
       const token = tokens[idx];
       const code = token.content.trim();
-      if (token.info === "mermaid" || token.info === "uml") {
+      if (token.info === "mermaid") {
         return mermaidChart(code);
       }
       const firstLine = code.split(/\n/)[0].trim();
@@ -80,11 +83,3 @@ export default {
   }
 };
 </script>
-<style>
-.header-anchor {
-  text-decoration: none;
-  color: rgb(83, 83, 83) !important;
-  vertical-align: text-top;
-}
-</style>
-

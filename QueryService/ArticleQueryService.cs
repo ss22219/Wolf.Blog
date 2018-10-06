@@ -66,6 +66,9 @@ namespace QueryService
             skip = (int) Math.Min(Math.Ceiling(_articleDetails.Count / (double) param.Page), skip);
 
             var queryList = _articleDetails.Where(a => a.State != ArticleDetailState.Deleted).ToList();
+            var count = queryList.Count();
+            if(count < (param.Page - 1) * pageSize)
+                return pageInfo;
             queryList = queryList.Skip(skip).Take(pageSize + 1).ToList();
             if (queryList.Count > pageSize)
             {

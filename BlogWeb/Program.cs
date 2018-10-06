@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using System.Net;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace BlogWeb
@@ -12,6 +13,7 @@ namespace BlogWeb
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseKestrel(kestrel => kestrel.Listen(IPAddress.Any, 5002))
                 .UseStartup<Startup>();
     }
 }
