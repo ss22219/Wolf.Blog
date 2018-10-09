@@ -9,8 +9,4 @@
     <ProjectReference Include="..\ArticleDomain\ArticleDomain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Zaabee.Mongo" Version="1.2.6.1" />
-  </ItemGroup>
-
 </Project>
