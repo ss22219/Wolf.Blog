@@ -46,7 +46,6 @@ namespace ArticleHost
                 .AddSingleton<IArticleQueryService, ArticleQueryService>()
                 .AddSingleton<IArticleCategoryRepository>(e => categoryRepository)
                 .AddSingleton<ICategoryQueryService>(e => categoryRepository)
-                .UseUrls("http://*:5001")
                 .Run();
         }
     }
