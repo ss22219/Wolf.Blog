@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ArticleDomain.AggregateRoots;
+﻿using ArticleDomain.AggregateRoots;
 using ArticleDomain.IRepositories;
 
 namespace ArticleDomain.DomainServices
@@ -18,7 +15,7 @@ namespace ArticleDomain.DomainServices
 
         public void Delete(string id)
         {
-            var category = _articleCategoryRepository.Restore(id, out int version);
+            var category = _articleCategoryRepository.Restore(id, out var version);
             if (category == null)
                 throw new ArticleDomainException("文章分类不存在");
             _articleCategoryRepository.Delete(id);

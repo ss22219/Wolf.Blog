@@ -41,7 +41,7 @@ namespace BlogWeb
             while (innerEx.InnerException != null)
                 innerEx = innerEx.InnerException;
             var message = innerEx.Message;
-            var result = JsonConvert.SerializeObject(new { code = 200, message });
+            var result = JsonConvert.SerializeObject(new {code = 200, message});
             context.Response.Headers.Add("Content-Type", "application/json; charset=utf-8");
             return context.Response.WriteAsync(result);
         }

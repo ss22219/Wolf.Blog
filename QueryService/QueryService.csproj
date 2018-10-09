@@ -7,7 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ArticleApplication\ArticleApplication.csproj" />
     <ProjectReference Include="..\Infrastracture.Configuration.Abstractions\Infrastracture.Configuration.Abstractions.csproj" />
-    <ProjectReference Include="..\MemoryRepository\MemoryRepository.csproj" />
+    <ProjectReference Include="..\MongoRepository\MongoRepository.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ArticleApplication\ArticleApplication.csproj" />
+      <ProjectReference Include="..\ArticleDomain\ArticleDomain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Zaabee.Mongo.Abstractions, Version=1.0.6.1, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\..\.nuget\packages\zaabee.mongo.abstractions\1.0.6.1\lib\netstandard2.0\Zaabee.Mongo.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>

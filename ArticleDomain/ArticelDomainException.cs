@@ -3,7 +3,7 @@ using System;
 namespace ArticleDomain
 {
     /// <summary>
-    /// 文章领域异常，用于区分业务异常与Bug异常
+    ///     文章领域异常，用于区分业务异常与Bug异常
     /// </summary>
     public class ArticleDomainException : Exception
     {

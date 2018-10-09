@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Infrastracture.Configuration.Abstractions
+﻿namespace Infrastracture.Configuration.Abstractions
 {
     public interface IConfig
     {

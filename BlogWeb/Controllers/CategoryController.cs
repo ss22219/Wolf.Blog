@@ -24,7 +24,7 @@ namespace BlogWeb.Controllers
             return Json(new {code = 0});
         }
 
-        public IActionResult Create([FromBody]CreateCategoryParam param)
+        public IActionResult Create([FromBody] CreateCategoryParam param)
         {
             _articleApplicationService.CreateCategory(param);
             return Json(new {code = 0});

@@ -3,60 +3,71 @@ using System.Collections.Generic;
 using System.Linq;
 using ArticleDomain.AggregateRoots;
 using ArticleDomain.IRepositories;
+using Zaabee.Mongo.Abstractions;
 
-namespace MemoryRepository
+namespace MongoRepository
 {
     public class ArticleRepository : IArticleRepository
     {
-        private readonly List<ArticleEntity> articleEntities = new List<ArticleEntity>();
+        private readonly IZaabeeMongoClient _client;
 
-        public void Add(Article article)
+        public ArticleRepository(IZaabeeMongoClient client)
         {
-            articleEntities.Add(new ArticleEntity(article));
+            _client = client;
         }
 
         public string FindIdByTitle(string title)
         {
-            return articleEntities.FirstOrDefault(a => a.Title == title)?.Id;
+            return _client.GetQueryable<ArticleEntity>().FirstOrDefault(a => a.Title == title)?.Id;
         }
 
-        public Article Restore(string id, out int version)
+        public void Add(Article article)
         {
-            var entity = articleEntities.FirstOrDefault(e => e.Id == id);
-            version = entity?.Version ?? 0;
-            if (entity == null)
-                return null;
-            return new Article(entity.Id, entity.Title, entity.Content, entity.CreateDate,
-                (Article.ArticleState) entity.State, entity.CategoryId, entity.Tags);
+            _client.Add(new ArticleEntity(article));
         }
 
         public bool Update(Article article, int version)
         {
-            var entity = articleEntities.FirstOrDefault(e => e.Id == article.Id);
+            var entity = _client.GetQueryable<ArticleEntity>().FirstOrDefault(e => e.Id == article.Id);
             if (entity == null)
             {
-                entity = new ArticleEntity(article);
-                entity.Version = ++version;
-                articleEntities.Add(entity);
+                entity = new ArticleEntity(article) {Version = ++version};
+                _client.Add(entity);
                 return true;
             }
 
             if (entity.Version != version)
                 return false;
 
-            entity.Update(article);
             entity.Version++;
+            _client.Update(entity);
             return true;
+        }
+
+        public Article Restore(string id, out int version)
+        {
+            var entity = _client.GetQueryable<ArticleEntity>().FirstOrDefault(a => a.Id == id);
+            version = entity?.Version ?? 0;
+            if (entity == null)
+                return null;
+            return new Article(entity.Id, entity.Title, entity.Content,
+                entity.CreateDate, (Article.ArticleState) entity.State,
+                entity.CategoryId, entity.Tags);
         }
 
         public List<ArticleEntity> GetAllEntity()
         {
-            return articleEntities;
+            return _client.GetQueryable<ArticleEntity>().ToList();
         }
     }
 
+
     public class ArticleEntity
     {
+        public ArticleEntity()
+        {
+        }
+
         public ArticleEntity(Article article)
         {
             Id = article.Id;

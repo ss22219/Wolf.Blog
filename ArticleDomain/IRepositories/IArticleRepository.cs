@@ -3,7 +3,7 @@
 namespace ArticleDomain.IRepositories
 {
     /// <summary>
-    /// 文章仓储的接口
+    ///     文章仓储的接口
     /// </summary>
     public interface IArticleRepository
     {
@@ -11,7 +11,7 @@ namespace ArticleDomain.IRepositories
         void Add(Article article);
 
         /// <summary>
-        /// 使用版本号更新文章聚合实例
+        ///     使用版本号更新文章聚合实例
         /// </summary>
         /// <param name="article"></param>
         /// <param name="version"></param>
@@ -19,7 +19,7 @@ namespace ArticleDomain.IRepositories
         bool Update(Article article, int version);
 
         /// <summary>
-        /// 还原文章聚合实例
+        ///     还原文章聚合实例
         /// </summary>
         /// <param name="id"></param>
         /// <param name="version"></param>

@@ -1,5 +1,4 @@
-﻿using System;
-using ArticleDomain.AggregateRoots;
+﻿using ArticleDomain.AggregateRoots;
 using ArticleDomain.DomainEvents;
 using ArticleDomain.IRepositories;
 using Zaaby.DDD.Abstractions.Domain;
@@ -8,13 +7,13 @@ using Zaaby.DDD.Abstractions.Infrastructure.EventBus;
 namespace ArticleDomain.DomainServices
 {
     /// <summary>
-    /// 文章领域服务，封装文章的规则，事件推送
+    ///     文章领域服务，封装文章的规则，事件推送
     /// </summary>
     public class ArticleDomainService : IDomainService
     {
         private const string CreateLock = "CreateArticleLock";
-        readonly IArticleRepository _articleRepository;
-        readonly IDomainEventPublisher _domainEventPublisher;
+        private readonly IArticleRepository _articleRepository;
+        private readonly IDomainEventPublisher _domainEventPublisher;
 
         public ArticleDomainService(IArticleRepository articleRepository, IDomainEventPublisher domainEventPublisher)
         {
@@ -47,7 +46,9 @@ namespace ArticleDomain.DomainServices
                         return article;
                 }
                 else
+                {
                     throw new ArticleDomainException("文章不存在");
+                }
             }
         }
 
@@ -63,7 +64,9 @@ namespace ArticleDomain.DomainServices
                         return article;
                 }
                 else
+                {
                     throw new ArticleDomainException("文章不存在");
+                }
             }
         }
     }

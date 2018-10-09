@@ -6,19 +6,18 @@ using Zaaby.DDD.Abstractions.Application;
 namespace IArticleApplication.IntegrationEvents
 {
     /// <summary>
-    /// 新创建文章事件
+    ///     新创建文章事件
     /// </summary>
     public class NewArticleCreatedEvent : IIntegrationEvent
     {
-        public ArticleEventData Data { get;  set; }
-
         public NewArticleCreatedEvent()
         {
         }
 
-        public NewArticleCreatedEvent(string id, string title, string content, DateTime createDate, ArticleDetailState state, string categoryId, IList<string> tags = null)
+        public NewArticleCreatedEvent(string id, string title, string content, DateTime createDate,
+            ArticleDetailState state, string categoryId, IList<string> tags = null)
         {
-            this.Data = new ArticleEventData
+            Data = new ArticleEventData
             {
                 Id = id,
                 Title = title,
@@ -29,5 +28,7 @@ namespace IArticleApplication.IntegrationEvents
                 CreateDate = createDate
             };
         }
+
+        public ArticleEventData Data { get; set; }
     }
 }

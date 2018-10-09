@@ -1,22 +1,22 @@
-﻿using ArticleApplication;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ArticleApplication;
 using IArticleApplication.IntegrationEvents;
 using IArticleApplication.Model;
 using IArticleApplication.Params;
 using Infrastracture.Configuration.Abstractions;
-using MemoryRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using MongoRepository;
 using Zaaby.DDD.Abstractions.Infrastructure.EventBus;
 
 namespace QueryService
 {
     public class ArticleQueryService : IArticleQueryService
     {
-        private readonly IIntegrationEventBus _integrationEventBus;
         private readonly List<ArticleEventData> _articleDetails = new List<ArticleEventData>();
-        private readonly IConfig _config;
         private readonly ArticleRepository _articleRepository;
+        private readonly IConfig _config;
+        private readonly IIntegrationEventBus _integrationEventBus;
 
         public ArticleQueryService(IIntegrationEventBus integrationEventBus, IConfig config,
             ArticleRepository articleRepository)
@@ -28,7 +28,7 @@ namespace QueryService
             _articleRepository = articleRepository;
 
             _articleDetails = _articleRepository.GetAllEntity().Select(entity =>
-                new ArticleEventData()
+                new ArticleEventData
                 {
                     Id = entity.Id,
                     Title = entity.Title,
@@ -45,7 +45,7 @@ namespace QueryService
             var data = _articleDetails.FirstOrDefault(a => a.Id == id);
             if (data == null)
                 return null;
-            return new ArticleDetail()
+            return new ArticleDetail
             {
                 Id = data.Id,
                 Title = data.Title,
@@ -59,7 +59,7 @@ namespace QueryService
 
         public ArticlePageInfo QueryArticleByPage(QueryArticleParam param)
         {
-            var pageInfo = new ArticlePageInfo() {List = new List<ArticleDetail>()};
+            var pageInfo = new ArticlePageInfo {List = new List<ArticleDetail>()};
             var pageSize = int.Parse(_config["PageSize"] ?? "20");
             var skip = (param.Page - 1) * pageSize;
             skip = Math.Max(0, skip);
@@ -67,7 +67,7 @@ namespace QueryService
 
             var queryList = _articleDetails.Where(a => a.State != ArticleDetailState.Deleted).ToList();
             var count = queryList.Count();
-            if(count < (param.Page - 1) * pageSize)
+            if (count < (param.Page - 1) * pageSize)
                 return pageInfo;
             queryList = queryList.Skip(skip).Take(pageSize + 1).ToList();
             if (queryList.Count > pageSize)
@@ -76,7 +76,7 @@ namespace QueryService
                 pageInfo.NextPage = true;
             }
 
-            pageInfo.List = queryList.Select(data => new ArticleDetail()
+            pageInfo.List = queryList.Select(data => new ArticleDetail
             {
                 Id = data.Id,
                 Title = data.Title,
@@ -91,7 +91,7 @@ namespace QueryService
 
         private void Hanlde(NewArticleCreatedEvent ev)
         {
-            _articleDetails.Add(new ArticleEventData()
+            _articleDetails.Add(new ArticleEventData
             {
                 Id = ev.Data.Id,
                 CategoryId = ev.Data.CategoryId,
@@ -107,7 +107,9 @@ namespace QueryService
         {
             var detail = _articleDetails.FirstOrDefault(a => a.Id == ev.Data.Id);
             if (detail == null)
+            {
                 _articleDetails.Add(ev.Data);
+            }
             else
             {
                 if (detail.Version < ev.Data.Version)

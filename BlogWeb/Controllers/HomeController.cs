@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using Microsoft.AspNetCore.Mvc;
-using BlogWeb.Models;
-using IArticleApplication;
-using IArticleApplication.Params;
-using System.IO;
 
 namespace BlogWeb.Controllers
 {

@@ -1,4 +1,3 @@
-using System;
 using Zaaby.DDD.Abstractions.Application;
 
 namespace IArticleApplication.IntegrationEvents

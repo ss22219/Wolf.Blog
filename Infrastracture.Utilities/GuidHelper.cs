@@ -6,7 +6,17 @@ namespace Infrastracture.Utilities
     public sealed class GuidHelper
     {
         /// <summary>
-        /// 获取有序的唯一ID。
+        ///     有序GUID的类型（sqlServer用AtEnd，mysql用AsString或者AsBinary，oracle用AsBinary，postgresql用AsString或者AsBinary）
+        /// </summary>
+        public enum SequentialGuidType
+        {
+            SequentialAsString,
+            SequentialAsBinary,
+            SequentialAtEnd
+        }
+
+        /// <summary>
+        ///     获取有序的唯一ID。
         /// </summary>
         /// <returns></returns>
         public static Guid GenerateComb(SequentialGuidType sequentialGuidType = SequentialGuidType.SequentialAsString)
@@ -15,8 +25,8 @@ namespace Infrastracture.Utilities
         }
 
         /// <summary>
-        /// 根据枚举生成不同的有序GUID
-        /// http://www.codeproject.com/Articles/388157/GUIDs-as-fast-primary-keys-under-multiple-database
+        ///     根据枚举生成不同的有序GUID
+        ///     http://www.codeproject.com/Articles/388157/GUIDs-as-fast-primary-keys-under-multiple-database
         /// </summary>
         private static class SequentialGuidGenerator
         {
@@ -30,10 +40,7 @@ namespace Infrastracture.Utilities
                 var timestamp = DateTime.UtcNow.Ticks / 10000L;
                 var timestampBytes = BitConverter.GetBytes(timestamp);
 
-                if (BitConverter.IsLittleEndian)
-                {
-                    Array.Reverse(timestampBytes);
-                }
+                if (BitConverter.IsLittleEndian) Array.Reverse(timestampBytes);
 
                 var guidBytes = new byte[16];
 
@@ -51,6 +58,7 @@ namespace Infrastracture.Utilities
                             Array.Reverse(guidBytes, 0, 4);
                             Array.Reverse(guidBytes, 4, 2);
                         }
+
                         break;
 
                     case SequentialGuidType.SequentialAtEnd:
@@ -61,16 +69,6 @@ namespace Infrastracture.Utilities
 
                 return new Guid(guidBytes);
             }
-        }
-
-        /// <summary>
-        /// 有序GUID的类型（sqlServer用AtEnd，mysql用AsString或者AsBinary，oracle用AsBinary，postgresql用AsString或者AsBinary）
-        /// </summary>
-        public enum SequentialGuidType
-        {
-            SequentialAsString,
-            SequentialAsBinary,
-            SequentialAtEnd
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using ArticleDomain.AggregateRoots;
-using ArticleDomain.IRepositories;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ArticleApplication;
+using ArticleDomain.AggregateRoots;
+using ArticleDomain.IRepositories;
 using IArticleApplication.Model;
 
 namespace MemoryRepository
@@ -13,7 +13,7 @@ namespace MemoryRepository
 
         public void Add(ArticleCategory articleCategory)
         {
-            entities.Add(new ArticleCategoryEntity() {ArticleCategory = articleCategory});
+            entities.Add(new ArticleCategoryEntity {ArticleCategory = articleCategory});
         }
 
         public string FindIdByName(string name)
@@ -41,7 +41,7 @@ namespace MemoryRepository
             if (entity == null)
             {
                 entities.Add(
-                    new ArticleCategoryEntity() {ArticleCategory = articleCategory, Version = ++version});
+                    new ArticleCategoryEntity {ArticleCategory = articleCategory, Version = ++version});
                 return true;
             }
 
@@ -53,20 +53,20 @@ namespace MemoryRepository
             return true;
         }
 
-        private class ArticleCategoryEntity
-        {
-            public ArticleCategory ArticleCategory { get; set; }
-            public int Version { get; set; }
-        }
-
         public IList<CategoryInfo> AllCategory()
         {
-            return entities.Select(e => new CategoryInfo()
+            return entities.Select(e => new CategoryInfo
             {
                 ArticalQuantity = e.ArticleCategory.ArticleQuantity,
                 Name = e.ArticleCategory.Name,
                 Id = e.ArticleCategory.Id
             }).ToList();
+        }
+
+        private class ArticleCategoryEntity
+        {
+            public ArticleCategory ArticleCategory { get; set; }
+            public int Version { get; set; }
         }
     }
 }

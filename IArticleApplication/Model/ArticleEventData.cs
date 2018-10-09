@@ -8,32 +8,32 @@ namespace IArticleApplication.Model
         public string Id { get; set; }
 
         /// <summary>
-        /// 标题
+        ///     标题
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// 内容
+        ///     内容
         /// </summary>
         public string Content { get; set; }
 
         /// <summary>
-        /// 文章分类ID
+        ///     文章分类ID
         /// </summary>
         public string CategoryId { get; set; }
 
         /// <summary>
-        /// 文章状态
+        ///     文章状态
         /// </summary>
         public ArticleDetailState State { get; set; }
 
         /// <summary>
-        /// 文章标签
+        ///     文章标签
         /// </summary>
         public IList<string> Tags { get; set; }
 
         /// <summary>
-        /// 创建日期
+        ///     创建日期
         /// </summary>
         public DateTime CreateDate { get; set; }
 

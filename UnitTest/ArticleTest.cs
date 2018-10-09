@@ -1,10 +1,10 @@
+using System;
 using ArticleDomain;
 using ArticleDomain.AggregateRoots;
 using ArticleDomain.DomainEvents;
 using ArticleDomain.DomainServices;
 using MemoryRepository;
 using Moq;
-using System;
 using Xunit;
 using Zaaby.DDD.Abstractions.Infrastructure.EventBus;
 
@@ -27,18 +27,18 @@ namespace UnitTest
             var mock = new Mock<IDomainEventPublisher>();
             var publishedEvent = false;
 
-            mock.Setup(p => p.PublishEvent<NewArticleCreateDomainEvent>(It.IsAny<NewArticleCreateDomainEvent>()))
+            mock.Setup(p => p.PublishEvent(It.IsAny<NewArticleCreateDomainEvent>()))
                 .Callback<NewArticleCreateDomainEvent>(
-                e =>
-                {
-                    Assert.Equal(article.Id, e.Id);
-                    Assert.Equal(article.Content, e.Content);
-                    Assert.Equal(article.Title, e.Title);
-                    Assert.Equal(article.CategoryId, e.CategoryId);
-                    Assert.Equal(article.State, e.State);
-                    publishedEvent = true;
-                }
-            );
+                    e =>
+                    {
+                        Assert.Equal(article.Id, e.Id);
+                        Assert.Equal(article.Content, e.Content);
+                        Assert.Equal(article.Title, e.Title);
+                        Assert.Equal(article.CategoryId, e.CategoryId);
+                        Assert.Equal(article.State, e.State);
+                        publishedEvent = true;
+                    }
+                );
             var fackPublisher = mock.Object;
 
             var service = new ArticleDomainService(repos, fackPublisher);
@@ -53,6 +53,7 @@ namespace UnitTest
             catch (ArticleDomainException)
             {
             }
+
             Assert.False(publishedEvent);
         }
 
@@ -69,7 +70,7 @@ namespace UnitTest
             var article = CreateAggregateRoot();
             var repos = new ArticleRepository();
             repos.Add(article);
-            article = repos.Restore(article.Id, out int version);
+            article = repos.Restore(article.Id, out var version);
             Assert.NotNull(article);
             return article;
         }
@@ -81,14 +82,11 @@ namespace UnitTest
             var repos = new ArticleRepository();
             repos.Add(article);
 
-            article = repos.Restore(article.Id, out int version);
+            article = repos.Restore(article.Id, out var version);
             article.Publish();
 
             Assert.True(repos.Update(article, version));
             Assert.False(repos.Update(article, version));
         }
-
     }
-
-
 }

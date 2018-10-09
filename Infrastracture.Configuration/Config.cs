@@ -5,7 +5,7 @@ namespace Infrastracture.Configuration
 {
     public class Config : IConfig
     {
-        private IConfigurationSection _section;
+        private readonly IConfigurationSection _section;
 
         public Config(IConfigurationSection section)
         {

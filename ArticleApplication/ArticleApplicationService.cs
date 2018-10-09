@@ -1,12 +1,11 @@
-﻿using ArticleDomain.AggregateRoots;
+﻿using System;
+using System.Collections.Generic;
+using ArticleDomain.AggregateRoots;
 using ArticleDomain.DomainServices;
-using ArticleDomain.IRepositories;
 using IArticleApplication;
 using IArticleApplication.IntegrationEvents;
 using IArticleApplication.Model;
 using IArticleApplication.Params;
-using System;
-using System.Collections.Generic;
 using Infrastracture.Utilities;
 using Zaaby.DDD.Abstractions.Infrastructure.EventBus;
 using static ArticleDomain.AggregateRoots.Article;
@@ -14,12 +13,12 @@ using static ArticleDomain.AggregateRoots.Article;
 namespace ArticleApplication
 {
     /// <summary>
-    /// 文章应用服务
+    ///     文章应用服务
     /// </summary>
     public class ArticleApplicationService : IArticleApplicationService
     {
-        private readonly ArticleDomainService _articleDomainService;
         private readonly ArticleCategoryDomainService _articleCategoryDomainService;
+        private readonly ArticleDomainService _articleDomainService;
         private readonly IArticleQueryService _articleQueryService;
         private readonly ICategoryQueryService _categoryQueryService;
         private readonly IIntegrationEventBus _integrationEventBus;
@@ -59,10 +58,10 @@ namespace ArticleApplication
 
         public void PublishArticle(string id)
         {
-            var article = _articleDomainService.PublishArticle(id, out int version);
-            _integrationEventBus.PublishEvent(new ArticleUpdatedEvent()
+            var article = _articleDomainService.PublishArticle(id, out var version);
+            _integrationEventBus.PublishEvent(new ArticleUpdatedEvent
             {
-                Data = new ArticleEventData()
+                Data = new ArticleEventData
                 {
                     Id = article.Id, Title = article.Title, Content = article.Content, CreateDate = article.CreateDate,
                     State = (ArticleDetailState) article.State, CategoryId = article.CategoryId, Tags = article.Tags,
@@ -73,10 +72,10 @@ namespace ArticleApplication
 
         public void DeleteArticle(string id)
         {
-            var article = _articleDomainService.DeleteArticle(id, out int version);
-            _integrationEventBus.PublishEvent(new ArticleUpdatedEvent()
+            var article = _articleDomainService.DeleteArticle(id, out var version);
+            _integrationEventBus.PublishEvent(new ArticleUpdatedEvent
             {
-                Data = new ArticleEventData()
+                Data = new ArticleEventData
                 {
                     Id = article.Id, Title = article.Title, Content = article.Content, CreateDate = article.CreateDate,
                     State = (ArticleDetailState) article.State, CategoryId = article.CategoryId, Tags = article.Tags,
@@ -88,7 +87,7 @@ namespace ArticleApplication
         public void DeleteCategory(string id)
         {
             _articleCategoryDomainService.Delete(id);
-            _integrationEventBus.PublishEvent(new DeletedCategoryEvent()
+            _integrationEventBus.PublishEvent(new DeletedCategoryEvent
             {
                 Id = id
             });
@@ -103,10 +102,10 @@ namespace ArticleApplication
         {
             var category = new ArticleCategory(GuidHelper.GenerateComb().ToString(), param.Name, 0);
             _articleCategoryDomainService.Create(category);
-            _integrationEventBus.PublishEvent(new NewCreatedCategoryEvent()
+            _integrationEventBus.PublishEvent(new NewCreatedCategoryEvent
             {
                 Id = category.Id,
-                Name = category.Name,
+                Name = category.Name
             });
         }
     }

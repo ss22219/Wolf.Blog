@@ -1,0 +1,11 @@
+{
+  "MongoDb": {
+    "MaxConnectionPoolSize": 100,
+    "Database": "db",
+    "Hosts": [
+      "mongo.wolfapp.cn:27017"
+    ],
+    "UserName": "guest",
+    "Password": "guest"
+  }
+} 
