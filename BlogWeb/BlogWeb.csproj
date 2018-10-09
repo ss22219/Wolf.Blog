@@ -9,10 +9,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Cors">
       <Version>2.1.1</Version>
     </PackageReference>
+    <PackageReference Include="Zaaby.Client" Version="0.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Zaaby\Zaaby.Client\Zaaby.Client.csproj" />
     <ProjectReference Include="..\IArticleApplication\IArticleApplication.csproj" />
   </ItemGroup>
 
