@@ -4,13 +4,13 @@ COPY docker_boot.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker_boot.sh
 
 EXPOSE 5002
+EXPOSE 5001
 
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
 COPY . .
-RUN dotnet restore
-RUN dotnet publish ArticleHost/ArticleHost.csproj -c Release -o /app
-RUN dotnet publish BlogWeb/BlogWeb.csproj -c Release -o /app
+RUN dotnet publish ArticleHost/ArticleHost.csproj -c Release -o /app/host
+RUN dotnet publish BlogWeb/BlogWeb.csproj -c Release -o /app/blog
 
 FROM base AS final
 WORKDIR /app
