@@ -1,0 +1,13 @@
+FROM ss22219/dotnet-ssh-debug
+
+WORKDIR /app
+COPY docker_boot_dev.sh .
+RUN chmod +x docker_boot_dev.sh
+
+EXPOSE 5001
+EXPOSE 5002
+
+COPY /publish/app .
+
+ENV ASPNETCORE_ENVIRONMENT Production
+CMD ["/app/docker_boot_dev.sh"]
