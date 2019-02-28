@@ -1,7 +1,6 @@
 FROM microsoft/dotnet:2.2-aspnetcore-runtime
 
-EXPOSE 5000
-EXPOSE 5001
+EXPOSE 80
 
 COPY . /publish
 WORKDIR /publish
