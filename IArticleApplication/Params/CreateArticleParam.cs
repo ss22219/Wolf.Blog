@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace IArticleApplication.Params
@@ -18,7 +19,7 @@ namespace IArticleApplication.Params
         /// <summary>
         ///     文章分类ID
         /// </summary>
-        public string CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
 
         /// <summary>
         ///     文章状态

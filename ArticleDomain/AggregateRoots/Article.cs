@@ -8,7 +8,7 @@ namespace ArticleDomain.AggregateRoots
     /// <summary>
     ///     文章聚合根
     /// </summary>
-    public class Article : IAggregateRoot<string>
+    public class Article : IAggregateRoot<Guid>
     {
         public enum ArticleState
         {
@@ -17,10 +17,9 @@ namespace ArticleDomain.AggregateRoots
             [Description("已删除")] Deleted = 2
         }
 
-        public Article(string id, string title, string content, DateTime createDate, ArticleState state,
-            string categoryId = null, IList<string> tags = null)
+        public Article(Guid id, string title, string content, DateTime createDate, ArticleState state,
+            Guid? categoryId = null, IList<string> tags = null)
         {
-            Assert.IsNotNullOrWhiteSpace("文章id", id);
             Assert.IsNotNullOrWhiteSpace("文章标题", title);
             Assert.IsNotNullOrWhiteSpace("文章内容", content);
             if (createDate <= new DateTime(2000, 1, 1))
@@ -48,7 +47,7 @@ namespace ArticleDomain.AggregateRoots
         /// <summary>
         ///     文章分类ID
         /// </summary>
-        public string CategoryId { get; }
+        public Guid? CategoryId { get; }
 
         /// <summary>
         ///     文章状态
@@ -65,7 +64,7 @@ namespace ArticleDomain.AggregateRoots
         /// </summary>
         public DateTime CreateDate { get; set; }
 
-        public string Id { get; }
+        public Guid Id { get; }
 
         public void Publish()
         {

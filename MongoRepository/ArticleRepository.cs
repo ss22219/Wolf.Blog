@@ -16,7 +16,7 @@ namespace MongoRepository
             _client = client;
         }
 
-        public string FindIdByTitle(string title)
+        public Guid? FindIdByTitle(string title)
         {
             return _client.GetQueryable<ArticleEntity>().FirstOrDefault(a => a.Title == title)?.Id;
         }
@@ -44,7 +44,7 @@ namespace MongoRepository
             return true;
         }
 
-        public Article Restore(string id, out int version)
+        public Article Restore(Guid id, out int version)
         {
             var entity = _client.GetQueryable<ArticleEntity>().FirstOrDefault(a => a.Id == id);
             version = entity?.Version ?? 0;
@@ -79,7 +79,7 @@ namespace MongoRepository
             CreateDate = article.CreateDate;
         }
 
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         ///     标题
@@ -94,7 +94,7 @@ namespace MongoRepository
         /// <summary>
         ///     文章分类ID
         /// </summary>
-        public string CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
 
         /// <summary>
         ///     文章状态

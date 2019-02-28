@@ -1,14 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
-using ArticleApplication;
 using ArticleDomain.AggregateRoots;
 using ArticleDomain.IRepositories;
 using IArticleApplication.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Zaabee.Mongo.Abstractions;
 
 namespace MongoRepository
 {
-    public class ArticleCategoryRepository : IArticleCategoryRepository, ICategoryQueryService
+    public class ArticleCategoryRepository : IArticleCategoryRepository
     {
         private readonly IZaabeeMongoClient _client;
 
@@ -22,7 +22,7 @@ namespace MongoRepository
             _client.Add(new ArticleCategoryEntity(article));
         }
 
-        public string FindIdByName(string name)
+        public Guid? FindIdByName(string name)
         {
             return _client.GetQueryable<ArticleCategoryEntity>().FirstOrDefault(a => a.Name == name)?.Id;
         }
@@ -45,7 +45,7 @@ namespace MongoRepository
             return true;
         }
 
-        public ArticleCategory Restore(string id, out int version)
+        public ArticleCategory Restore(Guid id, out int version)
         {
             var entity = _client.GetQueryable<ArticleCategoryEntity>().FirstOrDefault(a => a.Id == id);
             version = entity?.Version ?? 0;
@@ -54,7 +54,7 @@ namespace MongoRepository
             return new ArticleCategory(entity.Id, entity.Name, entity.ArticleQuantity);
         }
 
-        public void Delete(string id)
+        public void Delete(Guid id)
         {
             _client.Delete<ArticleCategoryEntity>(a => a.Id == id);
         }
@@ -84,7 +84,7 @@ namespace MongoRepository
             ArticleQuantity = articleCategory.ArticleQuantity;
         }
 
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public int ArticleQuantity { get; set; }
         public int Version { get; set; }

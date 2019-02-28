@@ -1,4 +1,5 @@
 ﻿using ArticleDomain.AggregateRoots;
+using System;
 
 namespace ArticleDomain.IRepositories
 {
@@ -7,7 +8,7 @@ namespace ArticleDomain.IRepositories
     /// </summary>
     public interface IArticleRepository
     {
-        string FindIdByTitle(string title);
+        Guid? FindIdByTitle(string title);
         void Add(Article article);
 
         /// <summary>
@@ -24,6 +25,6 @@ namespace ArticleDomain.IRepositories
         /// <param name="id"></param>
         /// <param name="version"></param>
         /// <returns></returns>
-        Article Restore(string id, out int version);
+        Article Restore(Guid id, out int version);
     }
 }

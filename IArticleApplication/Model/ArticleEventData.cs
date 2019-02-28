@@ -5,7 +5,7 @@ namespace IArticleApplication.Model
 {
     public class ArticleEventData
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         ///     标题
@@ -20,7 +20,7 @@ namespace IArticleApplication.Model
         /// <summary>
         ///     文章分类ID
         /// </summary>
-        public string CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
 
         /// <summary>
         ///     文章状态

@@ -14,7 +14,7 @@ namespace BlogWeb
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
             return WebHost.CreateDefaultBuilder(args)
-                .UseKestrel(kestrel => kestrel.Listen(IPAddress.Any, 5002))
+                .UseKestrel()
                 .UseStartup<Startup>();
         }
     }

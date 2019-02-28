@@ -1,11 +1,11 @@
 ﻿using ArticleDomain.AggregateRoots;
 using ArticleDomain.IRepositories;
+using System;
 
 namespace ArticleDomain.DomainServices
 {
     public class ArticleCategoryDomainService
     {
-        private const string CreateLock = "CreateArticleCategoryLock";
         private readonly IArticleCategoryRepository _articleCategoryRepository;
 
         public ArticleCategoryDomainService(IArticleCategoryRepository articleCategoryRepository)
@@ -13,7 +13,7 @@ namespace ArticleDomain.DomainServices
             _articleCategoryRepository = articleCategoryRepository;
         }
 
-        public void Delete(string id)
+        public void Delete(Guid id)
         {
             var category = _articleCategoryRepository.Restore(id, out var version);
             if (category == null)
@@ -23,13 +23,10 @@ namespace ArticleDomain.DomainServices
 
         public void Create(ArticleCategory category)
         {
-            lock (CreateLock)
-            {
-                var id = _articleCategoryRepository.FindIdByName(category.Name);
-                if (id != null)
-                    throw new ArticleDomainEntityExistsException("文章分类已存在");
-                _articleCategoryRepository.Add(category);
-            }
+            var id = _articleCategoryRepository.FindIdByName(category.Name);
+            if (id != null)
+                throw new ArticleDomainEntityExistsException("文章分类已存在");
+            _articleCategoryRepository.Add(category);
         }
     }
 }

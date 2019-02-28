@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using IArticleApplication.Model;
-using IArticleApplication.Params;
+﻿using IArticleApplication.Params;
+using System;
 using Zaaby.DDD.Abstractions.Application;
 
 namespace IArticleApplication
@@ -11,14 +10,9 @@ namespace IArticleApplication
     public interface IArticleApplicationService : IApplicationService
     {
         void CreateArticle(CreateArticleParam createArticleParam);
-
-        ArticleDetail FindArticleById(string id);
-
-        ArticlePageInfo QueryArticleByPage(QueryArticleParam param);
-        void PublishArticle(string id);
-        void DeleteArticle(string id);
-        void DeleteCategory(string id);
-        IList<CategoryInfo> AllCategory();
+        void PublishArticle(Guid id);
+        void DeleteArticle(Guid id);
+        void DeleteCategory(Guid id);
         void CreateCategory(CreateCategoryParam param);
     }
 }

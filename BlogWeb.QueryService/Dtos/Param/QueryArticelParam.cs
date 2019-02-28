@@ -1,4 +1,4 @@
-﻿namespace IArticleApplication.Params
+﻿namespace BlogWeb.QueryService.Dtos.Param
 {
     public class QueryArticleParam
     {

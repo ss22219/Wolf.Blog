@@ -1,6 +1,7 @@
 ﻿using ArticleDomain.AggregateRoots;
 using ArticleDomain.DomainEvents;
 using ArticleDomain.IRepositories;
+using System;
 using Zaaby.DDD.Abstractions.Domain;
 using Zaaby.DDD.Abstractions.Infrastructure.EventBus;
 
@@ -11,7 +12,6 @@ namespace ArticleDomain.DomainServices
     /// </summary>
     public class ArticleDomainService : IDomainService
     {
-        private const string CreateLock = "CreateArticleLock";
         private readonly IArticleRepository _articleRepository;
         private readonly IDomainEventPublisher _domainEventPublisher;
 
@@ -23,51 +23,35 @@ namespace ArticleDomain.DomainServices
 
         public void CreateArticle(Article article)
         {
-            lock (CreateLock)
-            {
-                var id = _articleRepository.FindIdByTitle(article.Title);
-                if (!string.IsNullOrEmpty(id))
-                    throw new ArticleDomainEntityExistsException($"文章 {article.Title} 已经存在");
-                _articleRepository.Add(article);
-            }
-
+            var id = _articleRepository.FindIdByTitle(article.Title);
+            if (id != null)
+                throw new ArticleDomainEntityExistsException($"文章 {article.Title} 已经存在");
+            _articleRepository.Add(article);
             _domainEventPublisher.PublishEvent(new NewArticleCreateDomainEvent(article));
         }
 
-        public Article PublishArticle(string id, out int version)
+        public Article PublishArticle(Guid id, out int version)
         {
-            while (true)
-            {
-                var article = _articleRepository.Restore(id, out version);
-                if (article != null)
-                {
-                    article.Publish();
-                    if (_articleRepository.Update(article, version))
-                        return article;
-                }
-                else
-                {
-                    throw new ArticleDomainException("文章不存在");
-                }
-            }
+            var article = _articleRepository.Restore(id, out version);
+            if (article == null)
+                throw new ArticleDomainException("文章不存在");
+            article.Publish();
+
+            if (!_articleRepository.Update(article, version))
+                throw new ArticleDomainException("文章发布失败，版本不一致");
+
+            return article;
         }
 
-        public Article DeleteArticle(string id, out int version)
+        public Article DeleteArticle(Guid id, out int version)
         {
-            while (true)
-            {
-                var article = _articleRepository.Restore(id, out version);
-                if (article != null)
-                {
-                    article.Delete();
-                    if (_articleRepository.Update(article, version))
-                        return article;
-                }
-                else
-                {
-                    throw new ArticleDomainException("文章不存在");
-                }
-            }
+            var article = _articleRepository.Restore(id, out version);
+            if (article == null)
+                throw new ArticleDomainException("文章不存在");
+            article.Delete();
+            if (!_articleRepository.Update(article, version))
+                throw new ArticleDomainException("文章删除失败，版本不一致");
+            return article;
         }
     }
 }

@@ -19,23 +19,12 @@ namespace ArticleDomain.DomainServices.EventHandlers
         /// <param name="domainEvent"></param>
         public void Handle(NewArticleCreateDomainEvent domainEvent)
         {
-            ///版本不正确，采用重试策略
-            while (true)
-            {
-                //直接从仓储还原一个聚合，无法保证唯一性
-                var category = _articleCategoryRepository.Restore(domainEvent.CategoryId, out var version);
-                if (category != null)
-                {
-                    category.IncremntArticleQuantity();
-
-                    if (_articleCategoryRepository.Update(category, version))
-                        break;
-                }
-                else
-                {
-                    break;
-                }
-            }
+            int version = 0;
+            var category = domainEvent.CategoryId == null ? null : _articleCategoryRepository.Restore(domainEvent.CategoryId.Value, out version);
+            if (category == null)
+                return;
+            category.IncremntArticleQuantity();
+            _articleCategoryRepository.Update(category, version);
         }
     }
 }

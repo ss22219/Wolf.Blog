@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using Zaaby.Abstractions;
+using System;
+using System.Threading.Tasks;
 
 namespace BlogWeb
 {
@@ -21,13 +20,6 @@ namespace BlogWeb
             try
             {
                 await _next(context);
-                if (context.Response.StatusCode >= 400)
-                {
-                    var statusCode = context.Response.StatusCode;
-                    context.Response.StatusCode = 200;
-                    await HandleExceptionAsync(context, statusCode,
-                        new ZaabyException($"{context.Request.Path.Value} httpStatus:{statusCode}"));
-                }
             }
             catch (Exception ex)
             {

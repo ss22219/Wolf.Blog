@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using ArticleDomain.AggregateRoots;
+﻿using ArticleDomain.AggregateRoots;
 using ArticleDomain.DomainServices;
 using IArticleApplication;
 using IArticleApplication.IntegrationEvents;
 using IArticleApplication.Model;
 using IArticleApplication.Params;
 using Infrastracture.Utilities;
+using System;
 using Zaaby.DDD.Abstractions.Infrastructure.EventBus;
 using static ArticleDomain.AggregateRoots.Article;
 
@@ -19,26 +18,20 @@ namespace ArticleApplication
     {
         private readonly ArticleCategoryDomainService _articleCategoryDomainService;
         private readonly ArticleDomainService _articleDomainService;
-        private readonly IArticleQueryService _articleQueryService;
-        private readonly ICategoryQueryService _categoryQueryService;
         private readonly IIntegrationEventBus _integrationEventBus;
 
         public ArticleApplicationService(ArticleDomainService articleDomainService,
-            IArticleQueryService articleQueryService,
             IIntegrationEventBus integrationEventBus,
-            ArticleCategoryDomainService articleCategoryDomainService,
-            ICategoryQueryService categoryQueryService)
+            ArticleCategoryDomainService articleCategoryDomainService)
         {
             _articleDomainService = articleDomainService;
-            _articleQueryService = articleQueryService;
             _integrationEventBus = integrationEventBus;
             _articleCategoryDomainService = articleCategoryDomainService;
-            _categoryQueryService = categoryQueryService;
         }
 
         public void CreateArticle(CreateArticleParam param)
         {
-            var article = new Article(GuidHelper.GenerateComb().ToString(), param.Title, param.Content, DateTime.Now,
+            var article = new Article(GuidHelper.GenerateComb(), param.Title, param.Content, DateTime.Now,
                 (ArticleState) param.State,
                 param.CategoryId, param.Tags);
             _articleDomainService.CreateArticle(article);
@@ -46,17 +39,7 @@ namespace ArticleApplication
                 article.CreateDate, (ArticleDetailState) article.State, article.CategoryId, article.Tags));
         }
 
-        public ArticleDetail FindArticleById(string id)
-        {
-            return _articleQueryService.GetArticleDetail(id);
-        }
-
-        public ArticlePageInfo QueryArticleByPage(QueryArticleParam param)
-        {
-            return _articleQueryService.QueryArticleByPage(param);
-        }
-
-        public void PublishArticle(string id)
+        public void PublishArticle(Guid id)
         {
             var article = _articleDomainService.PublishArticle(id, out var version);
             _integrationEventBus.PublishEvent(new ArticleUpdatedEvent
@@ -70,7 +53,7 @@ namespace ArticleApplication
             });
         }
 
-        public void DeleteArticle(string id)
+        public void DeleteArticle(Guid id)
         {
             var article = _articleDomainService.DeleteArticle(id, out var version);
             _integrationEventBus.PublishEvent(new ArticleUpdatedEvent
@@ -84,7 +67,7 @@ namespace ArticleApplication
             });
         }
 
-        public void DeleteCategory(string id)
+        public void DeleteCategory(Guid id)
         {
             _articleCategoryDomainService.Delete(id);
             _integrationEventBus.PublishEvent(new DeletedCategoryEvent
@@ -93,14 +76,9 @@ namespace ArticleApplication
             });
         }
 
-        public IList<CategoryInfo> AllCategory()
-        {
-            return _categoryQueryService.AllCategory();
-        }
-
         public void CreateCategory(CreateCategoryParam param)
         {
-            var category = new ArticleCategory(GuidHelper.GenerateComb().ToString(), param.Name, 0);
+            var category = new ArticleCategory(GuidHelper.GenerateComb(), param.Name, 0);
             _articleCategoryDomainService.Create(category);
             _integrationEventBus.PublishEvent(new NewCreatedCategoryEvent
             {

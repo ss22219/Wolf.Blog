@@ -1,4 +1,5 @@
 ﻿using ArticleDomain.AggregateRoots;
+using System;
 
 namespace ArticleDomain.IRepositories
 {
@@ -6,7 +7,7 @@ namespace ArticleDomain.IRepositories
     {
         void Add(ArticleCategory article);
 
-        string FindIdByName(string name);
+        Guid? FindIdByName(string name);
 
         /// <summary>
         ///     更新持久化状态，如果版本不正确，返回false，如果仓储异常，抛出异常
@@ -16,7 +17,7 @@ namespace ArticleDomain.IRepositories
         /// <returns></returns>
         bool Update(ArticleCategory category, int version);
 
-        ArticleCategory Restore(string id, out int version);
-        void Delete(string id);
+        ArticleCategory Restore(Guid id, out int version);
+        void Delete(Guid id);
     }
 }

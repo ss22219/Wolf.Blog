@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ArticleDomain.AggregateRoots;
 using Zaaby.DDD.Abstractions.Domain;
 using static ArticleDomain.AggregateRoots.Article;
@@ -17,7 +18,7 @@ namespace ArticleDomain.DomainEvents
             State = article.State;
         }
 
-        public string Id { get; }
+        public Guid Id { get; }
 
         /// <summary>
         ///     标题
@@ -32,7 +33,7 @@ namespace ArticleDomain.DomainEvents
         /// <summary>
         ///     文章分类ID
         /// </summary>
-        public string CategoryId { get; }
+        public Guid? CategoryId { get; }
 
         /// <summary>
         ///     文章状态

@@ -14,8 +14,8 @@ namespace IArticleApplication.IntegrationEvents
         {
         }
 
-        public NewArticleCreatedEvent(string id, string title, string content, DateTime createDate,
-            ArticleDetailState state, string categoryId, IList<string> tags = null)
+        public NewArticleCreatedEvent(Guid id, string title, string content, DateTime createDate,
+            ArticleDetailState state, Guid? categoryId, IList<string> tags = null)
         {
             Data = new ArticleEventData
             {
