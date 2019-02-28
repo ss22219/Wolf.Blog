@@ -1,4 +1,4 @@
-FROM microsoft/2.2-aspnetcore-runtime
+FROM microsoft/dotnet:2.2-aspnetcore-runtime
 
 EXPOSE 5000
 EXPOSE 5001
