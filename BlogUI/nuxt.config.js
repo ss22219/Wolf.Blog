@@ -83,7 +83,7 @@ module.exports = {
    ** Build configuration
    */
   build: {
-    publicPath: 'https://unreal-1251258709.cos.ap-guangzhou.myqcloud.com/blog/',
+    publicPath: 'http://unreal-1251258709.file.myqcloud.com/blog/',
     /*
      ** You can extend webpack config here
      */
