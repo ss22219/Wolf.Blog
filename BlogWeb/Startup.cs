@@ -5,16 +5,15 @@ using BlogWeb.QueryService;
 using FileRepository;
 using IArticleApplication;
 using Infrastracture.Configuration;
+using Infrastracture.Configuration.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using Zaabee.RabbitMQ;
 using Zaabee.RabbitMQ.Abstractions;
 using Zaabee.RabbitMQ.Jil;
@@ -30,11 +29,12 @@ namespace BlogWeb
         {
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("RabbitMQ.json", true, true).
+                .AddJsonFile("RabbitMQ.json", true, true)
+                .AddJsonFile("Application.json", true, true).
             Build();
         }
 
-        private IConfiguration Configuration { get; }
+        public static IConfiguration Configuration { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -43,6 +43,7 @@ namespace BlogWeb
             var rabbitMqConfig = Configuration.GetSection("ZaabeeRabbitMQ").Get<MqConfig>();
 
             ZaabyServer.UseDDD(services);
+            var config = new Config(Configuration.GetSection("Application"));
             var dataDir = Environment.GetEnvironmentVariable("DATA_DIR") ?? "./";
             services
                 .AddSingleton<IZaabeeRabbitMqClient>(p =>
@@ -56,7 +57,7 @@ namespace BlogWeb
                 .AddSingleton<IArticleCategoryRepository>(new ArticleCategoryRepository(dataDir))
                 .AddSingleton<CategoryQueryService, CategoryQueryService>()
                 .AddScoped<IArticleApplicationService, ArticleApplicationService>()
-                .AddSingleton< ArticleQueryService>()
+                .AddSingleton(new ArticleQueryService(config))
                 .AddSingleton<CategoryQueryService>();
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -83,6 +84,7 @@ namespace BlogWeb
             else
                 app.UseExceptionHandler("/Home/Error");
 
+            app.UseRewriter(new RewriteOptions { }.AddRewrite(@"^article/[\d\-a-z]{36}$", "/", true));
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

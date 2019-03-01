@@ -1,6 +1,7 @@
 ﻿using BlogWeb.QueryService.Dtos.Param;
 using IArticleApplication.IntegrationEvents;
 using IArticleApplication.Model;
+using Infrastracture.Configuration.Abstractions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,15 @@ namespace BlogWeb.QueryService
 {
     public class ArticleQueryService : IIntegrationEventHandler<NewArticleCreatedEvent>
     {
-        public string _baseDir = Environment.GetEnvironmentVariable("DATA_DIR") ?? "./";
-        public string SaveDir => _baseDir.TrimEnd(new char[] { '/' }) + "/article/";
-        public string ListFile => $"{SaveDir}list.txt";
+        private string _baseDir = Environment.GetEnvironmentVariable("DATA_DIR") ?? "./";
+        private string SaveDir => _baseDir.TrimEnd(new char[] { '/' }) + "/article/";
+        private string ListFile => $"{SaveDir}list.txt";
+        private int pageSize;
+
+        public ArticleQueryService(IConfig config)
+        {
+            pageSize = config.Get<int>("PageSize");
+        }
 
         private string GetSavePath(Guid id) => $"{SaveDir}{id}";
 
@@ -23,7 +30,6 @@ namespace BlogWeb.QueryService
             if (!File.Exists(ListFile))
                 return new ArticlePageInfo { NextPage = false, List = new List<ArticleDetail>() };
             var list = File.ReadAllLines(ListFile).Where(i => !string.IsNullOrEmpty(i)).ToArray();
-            var pageSize = 20;
             if (list.Length < pageSize * param.Page)
                 return new ArticlePageInfo { NextPage = false, List = new List<ArticleDetail>() };
 

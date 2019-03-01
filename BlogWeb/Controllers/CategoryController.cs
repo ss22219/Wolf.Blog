@@ -1,3 +1,4 @@
+using BlogWeb.Filters;
 using BlogWeb.QueryService;
 using IArticleApplication;
 using IArticleApplication.Params;
@@ -22,12 +23,14 @@ namespace BlogWeb.Controllers
             return Json(_categoryQueryService.AllCategory());
         }
 
+        [AdminRole]
         public IActionResult Delete(Guid id)
         {
             _articleApplicationService.DeleteCategory(id);
             return Json(new { code = 0 });
         }
 
+        [AdminRole]
         public IActionResult Create([FromBody] CreateCategoryParam param)
         {
             _articleApplicationService.CreateCategory(param);

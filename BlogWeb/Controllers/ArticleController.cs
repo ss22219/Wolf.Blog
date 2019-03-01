@@ -1,3 +1,4 @@
+using BlogWeb.Filters;
 using BlogWeb.QueryService;
 using BlogWeb.QueryService.Dtos.Param;
 using IArticleApplication;
@@ -23,12 +24,14 @@ namespace BlogWeb.Controllers
             return Json(_articleQueryService.FindArticleById(id));
         }
 
+        [AdminRole]
         public IActionResult Publish(Guid id)
         {
             _articleApplicationService.PublishArticle(id);
             return Json(new {code = 0});
         }
 
+        [AdminRole]
         public IActionResult Delete(Guid id)
         {
             _articleApplicationService.DeleteArticle(id);
@@ -45,6 +48,7 @@ namespace BlogWeb.Controllers
             return Json(pageInfo);
         }
 
+        [AdminRole]
         public IActionResult Create([FromBody] CreateArticleParam param)
         {
             _articleApplicationService.CreateArticle(param);

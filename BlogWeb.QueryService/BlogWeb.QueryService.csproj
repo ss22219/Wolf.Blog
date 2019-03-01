@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ArticleDomain\ArticleDomain.csproj" />
     <ProjectReference Include="..\IArticleApplication\IArticleApplication.csproj" />
+    <ProjectReference Include="..\Infrastracture.Configuration.Abstractions\Infrastracture.Configuration.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,7 +10,6 @@ namespace FileRepository
     {
         public string _baseDir;
         public string SaveDir => _baseDir.TrimEnd(new char[] { '/' }) + "/category/";
-        public string ListFile => $"{SaveDir}list.txt";
         public ArticleCategoryRepository(string baseDir)
         {
             _baseDir = baseDir;

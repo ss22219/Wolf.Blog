@@ -76,13 +76,14 @@ module.exports = {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: 'http://127.0.0.1:5002/'
+    baseURL: '/'
   },
 
   /*
    ** Build configuration
    */
   build: {
+    publicPath: 'https://unreal-1251258709.cos.ap-guangzhou.myqcloud.com/blog/',
     /*
      ** You can extend webpack config here
      */

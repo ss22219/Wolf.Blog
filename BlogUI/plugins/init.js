@@ -8,4 +8,5 @@ export default function ({
   redirect
 }) {
   dispatch('getCategories');
+  dispatch('getLoginState');
 }

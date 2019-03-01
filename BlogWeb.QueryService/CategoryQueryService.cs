@@ -12,9 +12,9 @@ namespace BlogWeb.QueryService
 {
     public class CategoryQueryService : IIntegrationEventHandler<NewCreatedCategoryEvent>
     {
-        public string _baseDir = Environment.GetEnvironmentVariable("DATA_DIR") ?? "./";
-        public string SaveDir => _baseDir.TrimEnd(new char[] { '/' }) + "/category/";
-        public string ListFile => $"{SaveDir}list.txt";
+        private string _baseDir = Environment.GetEnvironmentVariable("DATA_DIR") ?? "./";
+        private string SaveDir => _baseDir.TrimEnd(new char[] { '/' }) + "/category/";
+        private string ListFile => $"{SaveDir}list.txt";
         private string GetSavePath(Guid id) => $"{SaveDir}{id}";
 
         public List<Category> AllCategory()
