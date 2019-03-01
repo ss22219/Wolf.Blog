@@ -40,18 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\.nojekyll" />
-    <None Include="wwwroot\_nuxt\09fd6d014d212084c151.js" />
-    <None Include="wwwroot\_nuxt\1836089f42b9af6028c9.js" />
-    <None Include="wwwroot\_nuxt\2528802c80c4f749df0f.js" />
-    <None Include="wwwroot\_nuxt\3fb60058c7d3d0d5ad9b.js" />
-    <None Include="wwwroot\_nuxt\9e5338ce2940d7453309.js" />
-    <None Include="wwwroot\_nuxt\9f50f1efea43bf9c611f.js" />
-    <None Include="wwwroot\_nuxt\b67bf7f71141d0490b08.js" />
-    <None Include="wwwroot\_nuxt\LICENSES" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="Application.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
