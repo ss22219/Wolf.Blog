@@ -27,7 +27,7 @@ const store = () => new Vuex.Store({
     }) {
       try {
         var res = await this.$axios('/home/islogin')
-        commit('setLogin', res.login)
+        commit('setLogin', res.data.login)
       } catch (e) {}
     }
   }
