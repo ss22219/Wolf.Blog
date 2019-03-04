@@ -46,7 +46,7 @@ namespace ArticleApplication
             {
                 Data = new ArticleEventData
                 {
-                    Id = article.Id, Title = article.Title, Content = article.Content, CreateDate = article.CreateDate,
+                    Id = article.Id, Title = article.Title, CreateDate = article.CreateDate,
                     State = (ArticleDetailState) article.State, CategoryId = article.CategoryId, Tags = article.Tags,
                     Version = version
                 }
@@ -60,7 +60,7 @@ namespace ArticleApplication
             {
                 Data = new ArticleEventData
                 {
-                    Id = article.Id, Title = article.Title, Content = article.Content, CreateDate = article.CreateDate,
+                    Id = article.Id, Title = article.Title, CreateDate = article.CreateDate,
                     State = (ArticleDetailState) article.State, CategoryId = article.CategoryId, Tags = article.Tags,
                     Version = version
                 }

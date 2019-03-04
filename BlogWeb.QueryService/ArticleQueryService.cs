@@ -18,6 +18,11 @@ namespace BlogWeb.QueryService
         private string ListFile => $"{SaveDir}list.txt";
         private int pageSize;
 
+        public ArticleQueryService()
+        {
+            pageSize = 10;
+        }
+
         public ArticleQueryService(IConfig config)
         {
             pageSize = config.Get<int>("PageSize");

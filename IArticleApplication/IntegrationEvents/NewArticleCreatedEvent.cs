@@ -21,7 +21,6 @@ namespace IArticleApplication.IntegrationEvents
             {
                 Id = id,
                 Title = title,
-                Content = content,
                 CategoryId = categoryId,
                 Tags = tags,
                 State = state,

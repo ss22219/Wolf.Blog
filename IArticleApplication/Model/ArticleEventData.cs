@@ -13,11 +13,6 @@ namespace IArticleApplication.Model
         public string Title { get; set; }
 
         /// <summary>
-        ///     内容
-        /// </summary>
-        public string Content { get; set; }
-
-        /// <summary>
         ///     文章分类ID
         /// </summary>
         public Guid? CategoryId { get; set; }
